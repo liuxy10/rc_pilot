@@ -353,7 +353,7 @@ static void __run_Z_controller()
     setpoint.Z_dot = rc_filter_march(&D_Z_pd, setpoint.Z - state_estimate.Z)
                    + rc_filter_march(&D_Z_i,  setpoint.Z - state_estimate.Z)
                    + setpoint.Z_dot_ff;
-    rc_saturate_double(&setpoint.Z_dot, -MAX_Z_VELOCITY, MAX_Z_VELOCITY);
+    rc_saturate_double(&setpoint.Z_dot, -MAX_Z_wVELOCITY, MAX_Z_VELOCITY);
 
     
     if (user_input.flight_mode != TEST_BENCH_DIRECT_Z_ACC)
@@ -410,7 +410,12 @@ static void __run_attitude_controller()
                        + setpoint.roll_dot_ff;
     rc_saturate_double(&setpoint.roll_dot, -MAX_ROLL_RATE, MAX_ROLL_RATE);
 
-    // ToDo - code for setpoint.pitch_dot and setpoint.yaw_dot
+    // Done - code for setpoint.pitch_dot
+
+    setpoint.pitch_dot = rc_filter_march(&D_pitch, setpoint.pitch - state_estimate.pitch)
+                        + setpoint.roll_dot_ff
+
+    // ToDo - code for setpoint.yaw_dot  
 }
 
 static void __run_attitude_rate_controller()
@@ -419,7 +424,12 @@ static void __run_attitude_rate_controller()
     setpoint.roll_throttle  = rc_filter_march(&D_roll_rate_pd,  setpoint.roll_dot  - state_estimate.roll_dot)
                             + rc_filter_march(&D_roll_rate_i,   setpoint.roll_dot  - state_estimate.roll_dot);
                             
-    // ToDo - Code for setpoint.pitch_throttle and setpoint.yaw_throttle
+    // Done - Code for setpoint.pitch_throttle
+
+    setpoint.pitch_throttle = rc_filter_march(&D_pitch_rate_pd, setpoint.pitch_dot - state_estimate.pitch_dot)
+                            + rc_filter_march(&D_pitch_rate_i, setpoint.pitch_dot - state_estimate.pitch_dot); 
+
+    // ToDo - Code for setpoint.yaw_throttle
 }
 
 static void __add_throttles_to_mixing_matrix(double* u, double* mot)
