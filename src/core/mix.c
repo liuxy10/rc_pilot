@@ -17,9 +17,14 @@
  * columns: X Y Z Roll Pitch Yaw
  * rows: motors 1-4
  */
+//Done - Add code for mix_4x - reference code for other configurations listed here.
 
-//ToDo - Add code for mix_4x - reference code for other configurations listed here.
-
+static double mix_4x[][6] = {
+    {0.0, 0.0, -1.0, -0.5, 0.5, 0.5}, 
+    {0.0, 0.0, -1.0, -0.5, -0.5, -0.5},
+    {0.0, 0.0, -1.0, 0.5, -0.5, 0.5}, 
+    {0.0, 0.0, -1.0, 0.5, 0.5, -0.5}
+}
 
 
 /**
@@ -138,11 +143,11 @@ int mix_init(rotor_layout_t layout)
 {
     switch (layout)
     {
-        case LAYOUT_4X:
-            rotors = 4;
-            dof = 4;
-            mix_matrix = mix_4x;
-            break;
+        // case LAYOUT_4X:
+        //     rotors = 4;
+        //     dof = 4;
+        //     mix_matrix = mix_4x;
+        //     break;
         case LAYOUT_4X2:
             rotors = 4;
             dof = 4;
