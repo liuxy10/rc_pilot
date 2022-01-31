@@ -143,11 +143,11 @@ int mix_init(rotor_layout_t layout)
 {
     switch (layout)
     {
-        // case LAYOUT_4X:
-        //     rotors = 4;
-        //     dof = 4;
-        //     mix_matrix = mix_4x;
-        //     break;
+        case LAYOUT_4X:
+            rotors = 4;
+            dof = 4;
+            mix_matrix = mix_4x;
+            break;
         case LAYOUT_4X2:
             rotors = 4;
             dof = 4;
