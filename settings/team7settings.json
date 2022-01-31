@@ -85,6 +85,7 @@
     
     "realsense_payload_serial_port": "/dev/ttyS1",
 
+    TODO: z, roll, pitch, yaw controller gains -> Change to PD + add gains
 
     "roll_rate_controller_pd": {
 		"TF_or_PID": "PD",
