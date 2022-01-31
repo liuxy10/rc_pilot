@@ -418,7 +418,7 @@ static void __run_attitude_controller()
     // Done - code for setpoint.pitch_dot
 
     setpoint.pitch_dot = rc_filter_march(&D_pitch, setpoint.pitch - state_estimate.pitch)
-                        + setpoint.roll_dot_ff;
+                        + setpoint.pitch_dot_ff;
 
     // ToDo - code for setpoint.yaw_dot  -> Does this need to be clamped on (-pi, pi)?
     setpoint.yaw_dot = rc_filter_march(&D_yaw, setpoint.yaw - state_estimate.yaw) 
