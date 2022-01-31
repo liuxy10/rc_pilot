@@ -353,7 +353,7 @@ static void __run_Z_controller()
     setpoint.Z_dot = rc_filter_march(&D_Z_pd, setpoint.Z - state_estimate.Z)
                    + rc_filter_march(&D_Z_i,  setpoint.Z - state_estimate.Z)
                    + setpoint.Z_dot_ff;
-    rc_saturate_double(&setpoint.Z_dot, -MAX_Z_wVELOCITY, MAX_Z_VELOCITY);
+    rc_saturate_double(&setpoint.Z_dot, -MAX_Z_VELOCITY, MAX_Z_VELOCITY);
 
     
     if (user_input.flight_mode != TEST_BENCH_DIRECT_Z_ACC)
