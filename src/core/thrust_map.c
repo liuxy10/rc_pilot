@@ -68,6 +68,13 @@ static double air2213_3s_map[][2] = {{0.000, 0.0}, {0.127, 0.022556517697878},
 
 
 //ToDo - Add code for your thrust_map
+// Done
+// TOSKY 2212 920 kv motor, 4S lipo, 8x4.5 MR prop
+static const int tosky2212_4s_points = 11;
+static double tosky2212_4s_map[][2] = {{0.0, 0.009151667481}, {0.1, 0.03907893918}, {0.2, 0.08761681004}, {0.3, 0.1377908596},
+    {0.4, 0.1925056375}, {0.5, 0.254737122}, {0.6, 0.34016194}, {0.7, 0.4331100671}, {0.8, 0.5439616785}, {0.9, 0.6523791956},
+    {1.0, 0.7443479231}};
+
 
 
 int thrust_map_init(thrust_map_t map)
@@ -99,7 +106,12 @@ int thrust_map_init(thrust_map_t map)
             data = air2213_3s_map;
             break;
 
-        //ToDo - Add code for your thrust_map
+        // ToDo - Add code for your thrust_map
+        case TOSKY2212_4S:
+            points = tosky2212_4s_points;
+            data = tosky2212_4s_map;
+            break;
+
 
         default:
             fprintf(stderr, "ERROR: unknown thrust map\n");
