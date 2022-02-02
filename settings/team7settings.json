@@ -4,7 +4,7 @@
 	"warnings_en": true,
 
 	"layout": "LAYOUT_4X",
-	"thrust_map": "TOSKY2212_4S",
+	"thrust_map": "LINEAR_MAP",
 	"orientation": "ORIENTATION_X_FORWARD",
 	"v_nominal": 16.8,
 
@@ -16,8 +16,8 @@
 
     "hover_throttle": -0.33,
 
-	"num_dsm_modes": 2,
-	"flight_mode_1": "MANUAL",
+	"num_dsm_modes": 3,
+	"flight_mode_1": "TEST_BENCH_4DOF",
 	"flight_mode_2": "LOITER",
 	"flight_mode_3": "MANUAL",
 
@@ -29,24 +29,24 @@
 	"dsm_pitch_pol": 1,
 	"dsm_yaw_ch": 4,
 	"dsm_yaw_pol": 1,
-	"dsm_mode_ch": 5,
+	"dsm_mode_ch": 7,
 	"dsm_mode_pol": 1,
 	"dsm_kill_mode": "DSM_KILL_DEDICATED_SWITCH",
-	"dsm_kill_ch": 7,
+	"dsm_kill_ch": 5,
 	"dsm_kill_pol": 1,
 
 	"printf_arm": true,
 	"printf_altitude": false,
 	"printf_battery": true,
-	"printf_position": true,
-	"printf_rpy": false,
-	"printf_sticks": false,
+	"printf_position": false,
+	"printf_rpy": true,
+	"printf_sticks": true,
 	"printf_setpoint": true,
 	"printf_u": false,
 	"printf_motors": false,
 	"printf_mode": true,
-	"printf_xbee": true, 
-	"printf_tracking": true, 
+	"printf_xbee": false, 
+	"printf_tracking": false, 
 	"printf_gps": false, 
 	"printf_magnetom": false,
 	"printf_rm3100": false,
@@ -85,29 +85,99 @@
     
     "realsense_payload_serial_port": "/dev/ttyS1",
 
+    "roll_rate_controller_pd": {
+		"TF_or_PID": "P",
+		"kp":0.2765
+	},
+
+    "roll_rate_controller_i": {
+		"TF_or_PID": "I",
+		"ki":0.02,
+        "imax": 0.05
+	},
+
 	"roll_controller": {
-		"TF_or_PID": "PD",
-		"kp": 0.2671, 
-		"kd": 0.2765
+		"TF_or_PID": "P",
+		"kp": 0.2671
 	},
 
     
 	"pitch_controller": {
-		"TF_or_PID": "PD",
-		"kp": 0.2732, 
-		"kd": 0.2841
+		"TF_or_PID": "P",
+		"kp": 0.2732
 	},
 
 
 	"yaw_controller": {
-		"TF_or_PID": "PD",
-		"kp": 0.0969, 
-		"kd": 0.1138
+		"TF_or_PID": "P",
+		"kp": 0.0969
 	},
 
 	"horiz_pos_ctrl": {
-		"TF_or_PID": "PD",
+		"TF_or_PID": "P",
 		"kp": 0.9916, 
-		"kd": 1.7435
+		"kd": 1.7435, 
+		"crossover_freq_rad_per_sec": 62.83
+	},
+
+
+    "pitch_rate_controller_pd": {
+		"TF_or_PID": "P",
+		"kp":0.2841
+	},
+    "pitch_rate_controller_i": {
+		"TF_or_PID": "I",
+		"ki":0.02,
+        "imax": 0.05
+	},
+
+
+    "yaw_rate_controller_pd": {
+		"TF_or_PID": "P",
+		"kp":0.1138
+	},
+    "yaw_rate_controller_i": {
+		"TF_or_PID": "I",
+		"ki":0.02,
+        "imax": 0.05
+	},
+
+
+    "altitude_rate_controller_pd": {
+		"TF_or_PID": "PD",
+		"kp":0.15,
+		"kd":0.03,
+		"crossover_freq_rad_per_sec": 62.83
+	},
+    "altitude_rate_controller_i": {
+		"TF_or_PID": "I",
+		"ki":0.05,
+        "imax": 0.1
+	},
+
+
+	"altitude_controller_pd": {
+		"TF_or_PID": "PD",
+		"kp":5.0,
+        "kd":0.02,
+		"crossover_freq_rad_per_sec": 62.83
+	},
+    "altitude_controller_i": {
+		"TF_or_PID": "I",
+		"ki": 0.15,
+        "imax": 0.1
+	},
+
+
+	"horiz_vel_ctrl_pd": {
+		"TF_or_PID": "PD",
+		"kp":2,
+		"kd":0.1,
+		"crossover_freq_rad_per_sec": 62.83
+	},
+    "horiz_vel_ctrl_i": {
+		"TF_or_PID": "I",
+		"ki":0.02,
+		"imax":0.05
 	}
 }
