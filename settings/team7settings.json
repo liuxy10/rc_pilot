@@ -4,7 +4,7 @@
 	"warnings_en": true,
 
 	"layout": "LAYOUT_4X",
-	"thrust_map": "TOSKY2212_4S",
+	"thrust_map": "LINEAR_MAP",
 	"orientation": "ORIENTATION_X_FORWARD",
 	"v_nominal": 16.8,
 
