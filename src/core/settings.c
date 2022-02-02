@@ -244,8 +244,12 @@ static int __parse_thrust_map(void)
     {
         settings.thrust_map = AIR2213_3S;
     }
-    //ToDo - Add code for your thrust_map
-    
+    // ToDo - Add code for your thrust_map
+    else if (strcmp(tmp_str, "TOSKY2212_4S") == 0)
+    {
+        settings.thrust_map = TOSKY2212_4S;
+    }
+
     else
     {
         fprintf(stderr, "ERROR: invalid thrust_map string\n");
