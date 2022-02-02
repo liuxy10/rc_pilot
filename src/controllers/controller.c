@@ -377,7 +377,7 @@ static void __run_XY_controller()
     rc_saturate_double(&setpoint.X_dot, -MAX_XY_VELOCITY, MAX_XY_VELOCITY);
     // Done - Code for setpoint.Y_dot
 
-    setpoint.X_dot = rc_filter_march(&D_Y, setpoint.Y - state_estimate.Y) 
+    setpoint.Y_dot = rc_filter_march(&D_Y, setpoint.Y - state_estimate.Y) 
                     + setpoint.Y_dot_ff; 
     rc_saturate_double(&setpoint.Y_dot, -MAX_XY_VELOCITY, MAX_XY_VELOCITY);
 
@@ -403,7 +403,7 @@ static void __run_XY_controller()
     setpoint.pitch = ((-cos(state_estimate.continuous_yaw) * setpoint.X_ddot
                        -sin(state_estimate.continuous_yaw) * setpoint.Y_ddot)
                         / GRAVITY)
-                        + setpoint.pitch_dot; 
+                        + setpoint.pitch_ff; 
 
 }
 
