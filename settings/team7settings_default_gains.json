@@ -4,7 +4,7 @@
 	"warnings_en": true,
 
 	"layout": "LAYOUT_4X",
-	"thrust_map": "LINEAR_MAP",
+	"thrust_map": "TOSKY2212_4S",
 	"orientation": "ORIENTATION_X_FORWARD",
 	"v_nominal": 16.8,
 
@@ -125,13 +125,13 @@
 
 	"roll_controller": {
 		"TF_or_PID": "P",
-		"kp": 8.0
+		"kp": 10.0
 	},
 
     
 	"pitch_controller": {
 		"TF_or_PID": "P",
-		"kp": 8.0
+		"kp": 7.0
 	},
 
 
