@@ -84,6 +84,8 @@ int __optimalGain(void){
 
 int runLQR(void){
 
+	__nearestSubspace(); 
+
 	double* state[6] = {state_estimate.roll, state_estimate.roll_dot, ...
 	 state_estimate.pitch, state_estimate.pitch_dot, state_estimate.yaw, state_estimate.yaw_dot};
 
