@@ -8,6 +8,7 @@
 #include <settings.h>
 #include <state_machine.h>
 #include <flight_mode.h>
+#include <LQR.h>
 
 // Flight Mode Startup Delay variables
 static uint64_t time_fm_started_ns;
@@ -550,7 +551,7 @@ static void __run_controller(double* u, double* mot)
     if (setpoint.en_rpy_rate_ctrl) __run_attitude_rate_controller();
 
     // 5) LQR controller
-    if (setpoint.en_LQR_ctrl) __run_LQR_controller(); 
+    if (setpoint.en_LQR_ctrl) run_LQR(); 
 
     // 6) Add Throttles to Mixing Matrix
     __add_throttles_to_mixing_matrix(u, mot);
