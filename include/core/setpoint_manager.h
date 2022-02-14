@@ -117,6 +117,7 @@ typedef struct setpoint_t
     double Y;
     ///<@}
 
+    int en_LQR_ctrl ///< enable LQR control, set in MANUAL_LQR flight mode
 } setpoint_t;
 
 extern setpoint_t setpoint;
