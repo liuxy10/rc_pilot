@@ -82,7 +82,7 @@ int __optimalGain(void){
 
 }
 
-int runLQR(void){
+int runLQR(setpoint_t* setpoint){
 
 	__nearestSubspace(); 
 
