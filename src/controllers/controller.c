@@ -8,6 +8,7 @@
 #include <settings.h>
 #include <state_machine.h>
 #include <flight_mode.h>
+#include <LQR.h>
 
 // Flight Mode Startup Delay variables
 static uint64_t time_fm_started_ns;
@@ -339,6 +340,24 @@ static void __assign_setpoints_and_enable_loops()
             setpoint.Z_dot_ff = -1 * (2*user_input.thr_stick - 1) * MAX_Z_VELOCITY;
             break;
 
+        //~TODO: enable the program to set user_input.flight_mode to MANUAL_LQR
+        case MANUAL_LQR:
+            // 1) Disable all PID Loops 
+            setpoint.en_6dof = 0; //(settings.dof == 6);
+            setpoint.en_rpy_rate_ctrl = 0;
+            setpoint.en_rpy_ctrl = 0;
+            setpoint.en_Z_ctrl = 0;
+            setpoint.en_XY_ctrl = 0;
+
+            // 2) enable the LQR controller
+            setpoint.en_LQR_ctrl = 1;
+            // 2) Assign Setpoints
+            setpoint.roll = user_input.roll_stick;
+            setpoint.pitch = user_input.pitch_stick;
+            setpoint.Z_throttle = -user_input.thr_stick / (cos(state_estimate.roll) * cos(state_estimate.pitch));
+            setpoint_update_yaw();
+            break;
+
         default:  // should never get here
             fprintf(stderr, "ERROR in setpoint_manager thread, unknown flight mode\n");
             break;
@@ -531,7 +550,10 @@ static void __run_controller(double* u, double* mot)
     // 4) Attitude Rate Controller
     if (setpoint.en_rpy_rate_ctrl) __run_attitude_rate_controller();
 
-    // 5) Add Throttles to Mixing Matrix
+    // 5) LQR controller
+    if (setpoint.en_LQR_ctrl) run_LQR(); 
+
+    // 6) Add Throttles to Mixing Matrix
     __add_throttles_to_mixing_matrix(u, mot);
 }
 #endif /* OFFBOARD_TEST */
