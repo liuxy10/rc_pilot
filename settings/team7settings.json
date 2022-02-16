@@ -12,13 +12,13 @@
 
 	"enable_mocap_dropout_emergency_land": true,
 	"mocap_dropout_timeout_ms": 300.0,
-	"dropout_z_throttle": -0.30,
+	"dropout_z_throttle": -0.4,
 
     "hover_throttle": -0.33,
 
 	"num_dsm_modes": 3,
-	"flight_mode_1": "TEST_BENCH_4DOF",
-	"flight_mode_2": "LOITER",
+	"flight_mode_1": "MANUAL",
+	"flight_mode_2": "OPEN_LOOP_DESCENT",
 	"flight_mode_3": "MANUAL",
 
 	"dsm_thr_ch": 1,

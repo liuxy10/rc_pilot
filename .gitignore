@@ -4,3 +4,4 @@ build/
 thoughts.md
 docs/html
 waypoints/
+*.csv
