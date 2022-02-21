@@ -25,16 +25,11 @@ static double hover[][6] = {
 
 */
 
-
-
-
-
-
-double* dists[5]; 
+ 
 
 static double* optGain[][6]; 
 
-int __nearestSubspace(void){
+int __nearestSubspace(double* dists){
 	double dist = -1; 
 	int idx = -1; 
 
@@ -56,7 +51,8 @@ int __nearestSubspace(void){
 }
 
 int __optimalGain(void){
-	int optKey = __nearestSubspace(); 
+	double* dists[5];
+	int optKey = __nearestSubspace(dists); 
 
 	if (optKey < 0){
 		fprintf(stderr, "ERROR: nearest subspace not found\n");
@@ -82,20 +78,19 @@ int __optimalGain(void){
 
 }
 
-int runLQR(setpoint_t* setpoint){
 
-	__nearestSubspace(); 
+int runLQR(setpoint_t *setpoint, state_estimate_t state_estimate){
 
-	double* state[6] = {state_estimate.roll, state_estimate.roll_dot, ...
+	__optimalGain(); 
+
+	double* state[8] = {state_estimate.zstate_estimate.roll, state_estimate.roll_dot, ...
 	 state_estimate.pitch, state_estimate.pitch_dot, state_estimate.yaw, state_estimate.yaw_dot};
 
 	for (int i = 0; i < 6; i++){
-		setpoint.roll += optGain[0][i]*state[i]; 
-		setpoint.pitch += optGain[2][i]*state[i]; 
-		setpoint.yaw += optGain[4][i]*state[i]; 
-		setpoint.roll_dot += optGain[1][i]*state[i]; 
-		setpoint.pitch_dot += optGain[3][i]*state[i]; 
-		setpoint.yaw_dot += optGain[5][i]*state[i]; 
+		setpoint->Z_throttle += optGain[0][i]*state[i]; 
+		setpoint->roll_throttle += optGain[1][i]*state[i]; 
+		setpoint->pitch_throttle += optGain[2][i]*state[i]; 
+		setpoint->yaw_throttle += optGain[3][i]*state[i]; 
 	}
 
 	return 0; 
