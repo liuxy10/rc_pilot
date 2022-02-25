@@ -44,11 +44,16 @@ static rc_filter_t gyro_yaw_lpf = RC_FILTER_INITIALIZER;
 static rc_filter_t z_lpf = RC_FILTER_INITIALIZER;
 
 // battery filter
-static rc_filter_t batt_lp = RC_FILTER_INITIALIZER;
+static rc_filter_t batt_lp = RC_FILTER_INITIALIZER; 
+
 
 // altitude filter components
 static rc_kalman_t alt_kf = RC_KALMAN_INITIALIZER;
 static rc_filter_t acc_lp = RC_FILTER_INITIALIZER;
+
+// xbee imu stuff
+volatile double last_yaw_xbee = 0.0;
+volatile int num_yaw_spins_xbee = 0; 
 
 static void __batt_init(void)
 {
@@ -360,9 +365,36 @@ static void __altitude_march(void)
  */
 static void __feedback_select(void)
 {
+    // static double last_yaw = 0.0;
+    // static int num_yaw_spins = 0;  
+    double diff;
+    double xbee_yaw; 
+
     switch (user_input.flight_mode)
     {
         case AUTONOMOUS:
+            state_estimate.roll = state_estimate.tb_imu[0];
+            state_estimate.pitch = state_estimate.tb_imu[1];
+            state_estimate.X = xbeeMsg.x;
+            state_estimate.Y = xbeeMsg.y;
+            state_estimate.Z = xbeeMsg.z;
+            state_estimate.X_dot = xbee_x_dot;
+            state_estimate.Y_dot = xbee_y_dot;
+            state_estimate.Z_dot = xbee_z_dot;
+            xbee_yaw = atan2(2 * (xbeeMsg.qw * xbeeMsg.qz + xbeeMsg.qx * xbeeMsg.qy),
+                    1 - 2 * (pow(xbeeMsg.qy, 2) + pow(xbeeMsg.qz, 2)));
+            diff = xbee_yaw + (num_yaw_spins_xbee * TWO_PI) - last_yaw_xbee;
+
+            // detect the crossover point at +-PI and update num yaw spins
+            if (diff < -M_PI)
+                num_yaw_spins_xbee++;
+            else if (diff > M_PI)
+                num_yaw_spins_xbee--;
+
+            state_estimate.continuous_yaw = xbee_yaw + (num_yaw_spins_xbee * TWO_PI);
+            state_estimate.yaw = xbee_yaw;
+            last_yaw_xbee = state_estimate.continuous_yaw;
+            break; 
         case LOITER:
         case LOITER_RSP:
             state_estimate.roll = state_estimate.tb_imu[0];
